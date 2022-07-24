@@ -319,6 +319,28 @@ cd "$TARGET_PATH"
 openvpn --config config.ovpn --daemon "$@"
 
 ############################################
+# Setup qBittorrent permissions
+############################################
+if [ ! -z $USER_TOR ]; then
+  printf "[INFO] Additional user request detected, creating"
+  if [ ! -z $UID ]; then
+    printf "[INFO] Assigning UID"
+    adduser -D -H -u $UID $USER_TOR
+  else
+    adduser -D -H $USER_TOR
+  fi
+fi
+
+if [ ! -z $USER_TOR ] && [ ! -z $GROUP_TOR ]; then
+  printf "[INFO] Assigning user to requested group"
+  if [ ! -z $GID ]; then
+    printf "[INFO] Creating group and assigning UID"
+    addgroup -g $GID $GROUP_TOR
+    adduser $USER_TOR $GROUP_TOR
+  fi
+fi
+
+############################################
 # Start qBittorrent
 ############################################
 printf "[INFO] Checking qBittorrent config\n"
@@ -340,7 +362,12 @@ while : ; do
 done
 
 printf "[INFO] Launching qBittorrent\n"
-qbittorrent-nox --webui-port=$WEBUI_PORT -d --profile=/config
+if [ ! -e $USER_TOR ]; then
+	qbittorrent-nox --webui-port=$WEBUI_PORT -d --profile=/config
+else
+  printf "[INFO] starting qBittorrent as $USER_TOR user\n"
+  runuser -l -c $USER_TOR 'qbittorrent-nox --webui-port=$WEBUI_PORT -d --profile=/config'
+fi
 sleep 10s
 status=$?
 printf "\n =========================================\n"

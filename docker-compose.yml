@@ -6,9 +6,13 @@ services:
         cap_add:
             - NET_ADMIN
         environment:
-            - REGION=Netherlands
-            - USER=
-            - PASSWORD=
+            - USER= \
+            - PASSWORD= \
+            - USER_TOR= \
+            - GROUP_TOR= \
+            - REGION="Netherlands" \
+            - WEBUI_PORT=8888 \
+            - DNS_SERVERS=84.200.69.80,84.200.70.40
         volumes:
             - ./config:/config
             - ./downloads:/downloads

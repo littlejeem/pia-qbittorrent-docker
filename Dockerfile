@@ -2,11 +2,12 @@
 FROM alpine:3.15
 
 ENV USER= \
-    PASSWORD= \
-    REGION="Netherlands" \
-    WEBUI_PORT=8888 \
-    DNS_SERVERS=84.200.69.80,84.200.70.40
-
+  PASSWORD= \
+  USER_TOR= \
+  GROUP_TOR= \
+  REGION="Netherlands" \
+  WEBUI_PORT=8888 \
+  DNS_SERVERS=84.200.69.80,84.200.70.40
 
 # Download Folder
 VOLUME /downloads
@@ -21,7 +22,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Ok lets install everything
 RUN apk add --no-cache -t .build-deps autoconf automake build-base cmake curl git libtool linux-headers perl pkgconf python3-dev re2c tar unzip icu-dev libexecinfo-dev openssl-dev qt5-qtbase-dev qt5-qttools-dev zlib-dev qt5-qtsvg-dev && \
-	apk add --no-cache ca-certificates libexecinfo libressl qt5-qtbase iptables openvpn ack bind-tools python3 && \
+	apk add --no-cache ca-certificates libexecinfo libressl qt5-qtbase iptables openvpn ack bind-tools nano python3 && \
 	if [ ! -e /usr/bin/python ]; then ln -sf python3 /usr/bin/python ; fi && \
   curl -sNLk --retry 5 https://boostorg.jfrog.io/artifactory/main/release/1.76.0/source/boost_1_76_0.tar.gz | tar xzC /tmp && \
   curl -sSL --retry 5 https://github.com/ninja-build/ninja/archive/refs/tags/v1.10.2.tar.gz | tar xzC /tmp && \
