@@ -323,9 +323,9 @@ openvpn --config config.ovpn --daemon "$@"
 ############################################
 if [ ! -z $USER_TOR ]; then
   printf "[INFO] Additional user request detected, creating"
-  if [ ! -z $UID ]; then
+  if [ ! -z $PUID ]; then
     printf "[INFO] Assigning UID"
-    adduser -D -H -u $UID $USER_TOR
+    adduser -D -H -u $PUID $USER_TOR
   else
     adduser -D -H $USER_TOR
   fi
@@ -333,9 +333,9 @@ fi
 
 if [ ! -z $USER_TOR ] && [ ! -z $GROUP_TOR ]; then
   printf "[INFO] Assigning user to requested group"
-  if [ ! -z $GID ]; then
+  if [ ! -z $PGID ]; then
     printf "[INFO] Creating group and assigning UID"
-    addgroup -g $GID $GROUP_TOR
+    addgroup -g $PGID $GROUP_TOR
     adduser $USER_TOR $GROUP_TOR
   fi
 fi

@@ -6,12 +6,14 @@ services:
         cap_add:
             - NET_ADMIN
         environment:
-            - USER= \
-            - PASSWORD= \
-            - USER_TOR= \
-            - GROUP_TOR= \
-            - REGION="Netherlands" \
-            - WEBUI_PORT=8888 \
+            - USER=
+            - PASSWORD=
+            - PUID=
+            - PGID=
+            - USER_TOR=
+            - GROUP_TOR=
+            - REGION="Netherlands"
+            - WEBUI_PORT=8888
             - DNS_SERVERS=84.200.69.80,84.200.70.40
         volumes:
             - ./config:/config

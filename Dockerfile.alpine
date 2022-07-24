@@ -3,6 +3,8 @@ FROM alpine:3.15
 
 ENV USER= \
   PASSWORD= \
+  PUID= \
+  PGID= \
   USER_TOR= \
   GROUP_TOR= \
   REGION="Netherlands" \
